@@ -1,62 +1,60 @@
-# MERN Authentication Starter
+MERN Auth + Notes Application
 
-This is a starter app for a MERN stack application with authentication. This is for a SPA (Single Page Application) workflow that uses the [Vite](https://vite.dev) Build tool. This authentication workflow is based off of my [MERN Stack From Scratch | eCommerce](https://www.traversymedia.com/mern-stack-from-scratch) course.
+A full-stack MERN (MongoDB, Express, React, Node.js) application featuring user authentication and a personal notes system.
+Users can register, login, and securely create & view notes.
 
-<img src="./frontend/public/screen.png" />
+This project is extended from a base MERN auth setup with a custom Notes feature added on top.
 
-It includes the following:
+🚀 Features
+🔐 Authentication
 
-- Backend API with Express & MongoDB
-- Routes for auth, logout, register, profile, update profile
-- JWT authentication stored in HTTP-only cookie
-- Protected routes and endpoints
-- Custom middleware to check JSON web token and store in cookie
-- Custom error middleware
-- React frontend to register, login, logout, view profile, and update profile
-- React Bootstrap UI library
-- React Toastify notifications
+User Registration
 
-## Usage
+User Login
 
-- Create a MongoDB database and obtain your `MongoDB URI` - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register)
-- Create a PayPal account and obtain your `Client ID` - [PayPal Developer](https://developer.paypal.com/)
+JWT-based authentication
 
-### Env Variables
+Protected routes
 
-Rename the `.env.example` file to `.env` and add the following
+Password encryption
 
-```
-NODE_ENV = development
-PORT = 5000
-MONGO_URI = your mongodb uri
-JWT_SECRET = 'abc123'
-```
+🗒️ Notes Module (Add-on)
 
-Change the JWT_SECRET to what you want
+Create personal notes
 
-### Install Dependencies (frontend & backend)
+Fetch notes for logged-in user only
 
-```
-npm install
-cd frontend
-npm install
-```
+Notes are user-specific
 
-### Run
+Secure backend APIs
 
-```
+Clean dashboard & notes UI
 
-# Run frontend (:3000) & backend (:5000)
-npm run dev
+🛠 Tech Stack
+Frontend
 
-# Run backend only
-npm run server
-```
+React (Vite)
 
-## Build & Deploy
+React Router DOM
 
-```
-# Create frontend prod build
-cd frontend
-npm run build
-```
+Redux Toolkit
+
+RTK Query
+
+Axios
+
+Bootstrap
+
+Backend
+
+Node.js
+
+Express.js
+
+MongoDB
+
+Mongoose
+
+JWT Authentication
+
+bcrypt
