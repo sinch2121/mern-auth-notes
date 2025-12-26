@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
-import FormContainer from '../components/FormContainer';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+
+import FormContainer from '../components/FormContainer';
+import Loader from '../components/Loader';
+
 import { useLoginMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
-import { toast } from 'react-toastify';
-import Loader from '../components/Loader';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -16,23 +18,29 @@ const LoginScreen = () => {
   const navigate = useNavigate();
 
   const [login, { isLoading }] = useLoginMutation();
-
   const { userInfo } = useSelector((state) => state.auth);
 
+  // ✅ If already logged in, go to notes
   useEffect(() => {
     if (userInfo) {
-      navigate('/');
+      navigate('/notes');
     }
-  }, [navigate, userInfo]);
+  }, [userInfo, navigate]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    if (!email || !password) {
+      toast.error('Please enter email and password');
+      return;
+    }
+
     try {
       const res = await login({ email, password }).unwrap();
-      dispatch(setCredentials({ ...res }));
-      navigate('/');
+      dispatch(setCredentials(res));
+      navigate('/notes'); // ✅ IMPORTANT
     } catch (err) {
-      toast.error(err?.data?.message || err.error);
+      toast.error(err?.data?.message || 'Login failed');
     }
   };
 
@@ -48,7 +56,7 @@ const LoginScreen = () => {
             placeholder='Enter email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-          ></Form.Control>
+          />
         </Form.Group>
 
         <Form.Group className='my-2' controlId='password'>
@@ -58,24 +66,25 @@ const LoginScreen = () => {
             placeholder='Enter password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-          ></Form.Control>
+          />
         </Form.Group>
 
         <Button
-          disabled={isLoading}
           type='submit'
           variant='primary'
           className='mt-3'
+          disabled={isLoading}
         >
           Sign In
         </Button>
-      </Form>
 
-      {isLoading && <Loader />}
+        {isLoading && <Loader />}
+      </Form>
 
       <Row className='py-3'>
         <Col>
-          New Customer? <Link to='/register'>Register</Link>
+          New Customer?{' '}
+          <Link to='/register'>Register</Link>
         </Col>
       </Row>
     </FormContainer>
